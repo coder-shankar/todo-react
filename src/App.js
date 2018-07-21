@@ -9,6 +9,7 @@ import withLogin from "./login/withLogin";
 import withLoginScreen from "./login/loginScreen";
 
 const List = ({ list = [] }) => {
+  console.log(list);
   return (
     <table>
       {list.map((item, i) => (
@@ -40,6 +41,7 @@ class App extends Component {
   };
 
   render() {
+    console.log("app");
     return (
       <div className="App">
         {/* <Fetch query={this.state.query} setQuery={this.fetchQuery} /> */}

@@ -18,7 +18,6 @@ const withLogin = Component => {
 
     loginHandler = async e => {
       e.preventDefault();
-      console.log("method is invoked");
       try {
         let res = await axios({
           method: "post",
@@ -28,7 +27,8 @@ const withLogin = Component => {
             headers: { "Content-Type": "application/x-www-form-urlencoded" }
           }
         });
-        if (res.status == 200) {
+        // checking response status
+        if (res.status === 200) {
           this.setState({ loginStatus: true });
           const { accessToken, refreshToken } = res.data;
           console.log("accessToken", accessToken);

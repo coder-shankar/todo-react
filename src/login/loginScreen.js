@@ -10,7 +10,7 @@ const withLoginScreen = Component => {
       console.log(this.props);
       return !this.props.loginStatus ? (
         <div className="loginWrapper">
-          <form method="post">
+          <form>
             <label> UserName:</label>
             <input type="text" name="username" onChange={this.handleOnChange} />
             <br />
