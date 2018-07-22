@@ -33,15 +33,53 @@ const withFetchData = Component => {
     }
 
     componentWillReceiveProps(nextProps) {
+      console.log(nextProps, "props next");
       if (this.props.query != nextProps.query) {
-        this.fetchData("?title=" + nextProps.query);
+        this.fetchData(
+          "?title=" +
+            nextProps.query +
+            "&&page=" +
+            nextProps.page +
+            "&&limit=" +
+            nextProps.limit
+        );
+      } else {
+        this.fetchData(
+          "?title=" +
+            nextProps.query +
+            "&&page=" +
+            nextProps.page +
+            "&&limit=" +
+            nextProps.limit
+        );
       }
     }
+
+    // item change handler
+    itemChangeHandler = async e => {
+      await this.props.setPager(1, e.target.value);
+    };
 
     render() {
       console.log(this.props, "prp from withfetch data");
       return (
-        <Component lists={this.state.list} setQuery={this.props.setQuery} />
+        <div>
+          <label>Item:</label>
+          <select onChange={this.itemChangeHandler}>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+          </select>
+          <Component lists={this.state.list} setQuery={this.props.setQuery} />
+          <div>
+            {/* should be dynamic button */}
+            <button>1</button>
+            <button>2</button>
+            <button>3</button>
+            <button>4</button>
+          </div>
+        </div>
       );
     }
   }

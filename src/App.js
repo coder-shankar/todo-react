@@ -32,7 +32,9 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      query: ""
+      query: "",
+      page: 1,
+      limit: 1
     };
   }
 
@@ -40,12 +42,22 @@ class App extends Component {
     this.setState({ query: query });
   };
 
+  fetchPageQuery = async (page, limit) => {
+    await this.setState({ page: page, limit: limit });
+  };
+
   render() {
     console.log("app");
     return (
       <div className="App">
         {/* <Fetch query={this.state.query} setQuery={this.fetchQuery} /> */}
-        <Login query={this.state.query} setQuery={this.fetchQuery} />
+        <Login
+          query={this.state.query}
+          setQuery={this.fetchQuery}
+          setPager={this.fetchPageQuery}
+          page={this.state.page}
+          limit={this.state.limit}
+        />
       </div>
     );
   }

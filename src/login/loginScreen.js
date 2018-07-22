@@ -25,7 +25,13 @@ const withLoginScreen = Component => {
           </form>
         </div>
       ) : (
-        <Component query={this.props.query} setQuery={this.props.setQuery} />
+        <Component
+          query={this.props.query}
+          setQuery={this.props.setQuery}
+          setPager={this.props.setPager}
+          page={this.props.page}
+          limit={this.props.limit}
+        />
       );
     }
   }

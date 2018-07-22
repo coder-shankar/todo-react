@@ -50,6 +50,9 @@ const withLogin = Component => {
           loginHandler={this.loginHandler}
           setQuery={this.props.setQuery}
           query={this.props.query}
+          setPager={this.props.setPager}
+          page={this.props.page}
+          limit={this.props.limit}
         />
       );
     }

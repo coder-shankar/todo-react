@@ -7,8 +7,7 @@ const withSearch = Component => {
       super();
       this.state = {
         input: "",
-        list: [],
-        pageLimit: 1
+        list: []
       };
     }
 
@@ -21,48 +20,9 @@ const withSearch = Component => {
       return filterList;
     };
 
-    // item change handler
-    itemChangeHandler = async e => {
-      await this.setState({ pageLimit: e.target.value });
-      //get data from database
-      this.fetchData(1, this.state.pageLimit);
-    };
-
-    //function which to get todos from database
-    fetchData = async (page, limit) => {
-      console.log(limit, page);
-      try {
-        const token = localStorage.getItem("accessToken").toString();
-        let res = await axios({
-          method: "get",
-          url:
-            "http://127.0.0.1:8848/api/todos?page=" + page + "&&limit=" + limit,
-          headers: {
-            "Content-Type": "application/json",
-            oauth: token
-          }
-        });
-
-        this.setState({ list: res.data });
-        console.log(res.data.data, "res.data");
-        console.log(this.props.lists.data, "this.props.lists.data");
-      } catch (err) {
-        console.log(err);
-        alert(err);
-      }
-    };
-
     render() {
       return (
         <div>
-          <label>Item:</label>
-          <select onChange={this.itemChangeHandler}>
-            <option>1</option>
-            <option>2</option>
-            <option>3</option>
-            <option>4</option>
-          </select>
-
           <input
             type="text"
             name="input"
@@ -74,7 +34,7 @@ const withSearch = Component => {
             }}
           />
           {/* this.props.lists.data */}
-          <Component list={this.state.list.data} />
+          <Component list={this.props.lists.data} />
         </div>
       );
     }
