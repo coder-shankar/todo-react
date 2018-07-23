@@ -6,7 +6,8 @@ const withFetchData = Component => {
       super();
       this.state = {
         list: [],
-        query: ""
+        query: "",
+        buttons: [1, 2]
       };
     }
 
@@ -27,7 +28,13 @@ const withFetchData = Component => {
         console.log(err);
       }
     };
-
+    range = (start, end) => {
+      var ans = [];
+      for (let i = start; i <= end; i++) {
+        ans.push(i);
+      }
+      return ans;
+    };
     componentDidMount() {
       this.fetchData();
     }
@@ -53,15 +60,36 @@ const withFetchData = Component => {
             nextProps.limit
         );
       }
+      console.log(this.state.list.total.fulfillmentValue, "total data");
+      let array = this.range(
+        1,
+        Math.ceil(this.state.list.total.fulfillmentValue / this.props.limit)
+      );
+      this.setState({ buttons: array });
     }
 
     // item change handler
     itemChangeHandler = async e => {
-      await this.props.setPager(1, e.target.value);
+      await this.props.setPager(
+        Math.ceil(this.state.list.total.fulfillmentValue / this.props.limit),
+        e.target.value
+      );
+    };
+    pageChageHandler = () => {
+      let page = Math.ceil(
+        this.state.list.total.fulfillmentValue / this.props.limit
+      );
+      this.fetchData(
+        "?title=" +
+          this.props.query +
+          "&&page=" +
+          page +
+          "&&limit=" +
+          this.props.limit
+      );
     };
 
     render() {
-      console.log(this.props, "prp from withfetch data");
       return (
         <div>
           <label>Item:</label>
@@ -74,10 +102,9 @@ const withFetchData = Component => {
           <Component lists={this.state.list} setQuery={this.props.setQuery} />
           <div>
             {/* should be dynamic button */}
-            <button>1</button>
-            <button>2</button>
-            <button>3</button>
-            <button>4</button>
+            {this.state.buttons.map((item, i) => (
+              <button onClick={this.pageChageHandler}> {item}</button>
+            ))}
           </div>
         </div>
       );

@@ -37,7 +37,7 @@ const withLogin = Component => {
           localStorage.setItem("refreshToken", refreshToken);
         }
       } catch (err) {
-        alert(err);
+        alert("username or password doesnot match");
         console.log(err);
       }
     };
